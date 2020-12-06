@@ -42,6 +42,27 @@ void forEach(int* start, int* end, void func(int)) {
 }
 
 void map(int* start, int* end, int delegate(int), int** mapStart, int** mapEnd) {
+    if (start == end) {
+        *mapStart = *mapEnd = 0;
+        return;
+    }
+
+    int length = 0;
+    int* startCpy = start;
     
+    while (start++ != end) {
+        ++length;
+    }
+    int* mapList = *mapStart = malloc(sizeof(int) * length);
+    *mapEnd = mapList + length;
+    int* mapCurr = mapList;
+    int i = 0;
+
+    while (i++ < length) {
+        *mapCurr = delegate(*startCpy); 
+        ++startCpy;
+        ++mapCurr;
+    }
 }
+
 
